@@ -1,13 +1,14 @@
 <script>
 	export default {
+		// 执行一次
 		onLaunch: function() {
-			console.log('App Launch')
+			console.log('App Launch 项目启动了')
 		},
 		onShow: function() {
-			console.log('App Show')
+			console.log('App Show 项目显示了')
 		},
 		onHide: function() {
-			console.log('App Hide')
+			console.log('App Hide 项目隐藏了')
 		}
 	}
 </script>

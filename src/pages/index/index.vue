@@ -1,9 +1,11 @@
 <template>
 	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
+	
+	{{name}}
+		<view >
+          <text v-for="(item,index) in list " :key="index">我是谁啊 {{item.name}}</text>  
 		</view>
+		<button @click="chang('123',$event)">点击修改msg</button>
 	</view>
 </template>
 
@@ -11,39 +13,38 @@
 	export default {
 		data() {
 			return {
-				title: 'Hello'
+				title: 'Hello',
+				name:'张三',
+				list:[{name:'张三'},{name:'李四'},]
 			}
 		},
 		onLoad() {
-
+			// 执行一次
+          console.log('onLoad 首页刚刚加载 ');
+		},
+		onShow(){
+		 console.log('onShow 页面显示了');
+		},
+		onReay(){
+			// 执行一次
+			 console.log('onShow 页面初次渲染了');
+		},
+		onHide(){
+			console.log('onHide 页面隐藏了')
+		},
+		onUnload(){
+			console.log('onUnload 页面卸载了')
 		},
 		methods: {
-
+            chang(id,event){
+				this.name='李四'
+				console.log(id);
+				console.log('事件对象E',event);
+			}
 		}
 	}
 </script>
 
 <style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
-	}
 </style>
