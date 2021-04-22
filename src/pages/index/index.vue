@@ -1,14 +1,7 @@
 <template>
   <view class="index">
     <!-- search 搜索 -->
-    <view class="search">
-      <!-- 搜索框 -->
-      <view class="search-input">
-        <input type="text" placeholder="请输入搜索的商品" />
-      </view>
-      <!-- 搜索结果内容 -->
-      <view class="search-content"> </view>
-    </view>
+    <search></search>
     <!-- 轮播图 -->
     <view class="swiper-box">
       <swiper class="swiper" indicator-dots autoplay>
@@ -115,12 +108,17 @@
 </template>
 
 <script>
+import  search from '@/components/search.vue'
 export default {
   data() {
     return {
       SwiperList:[], //轮播图的数据
     };
   },
+  components:{
+    search
+  },
+  
   onLoad() {
     this.getAndShowSwiperList()
   },
@@ -141,19 +139,6 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.search {
-  .search-input {
-    padding: 18rpx;
-    background-color: #ea4451;
-    input {
-      height: 60rpx;
-      padding-left: 15rpx;
-      background-color: #fff;
-      font-size: 26rpx;
-      color: #999;
-    }
-  }
-}
 .swiper-box {
   .swiper {
     height: 340rpx;
