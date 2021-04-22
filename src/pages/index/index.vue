@@ -1,7 +1,7 @@
 <template>
-  <view class="index">
+  <view class="index" :style="{overflow:'hidden',height:pageHeight}">
     <!-- search 搜索 -->
-    <search></search>
+    <search @myPageHeight='indexGetHeight'></search>
     <!-- 轮播图 -->
     <view class="swiper-box">
       <swiper class="swiper" indicator-dots autoplay>
@@ -113,6 +113,7 @@ export default {
   data() {
     return {
       SwiperList:[], //轮播图的数据
+      pageHeight:'auto', //页面的高度
     };
   },
   components:{
@@ -124,6 +125,13 @@ export default {
   },
 
   methods: {
+    // 搜索时 页面禁止滚动
+    indexGetHeight(height){
+      console.log(height);
+      this.pageHeight =height
+        
+    },
+
     // 获取轮播图的数据
   async  getAndShowSwiperList(){
        const res = await this.request({
