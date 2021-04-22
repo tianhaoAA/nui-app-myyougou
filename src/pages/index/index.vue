@@ -14,92 +14,20 @@
     </view>
     <!-- 四个楼层 -->
     <view class="navs">
-      <navigator>
-        <image src="../../static/uploads/icon_index_nav_4@2x.png" mode="" />
-        <!-- <text></text> -->
-      </navigator>
-      <navigator>
-        <image src="../../static/uploads/icon_index_nav_3@2x.png" mode="" />
-        <!-- <text></text> -->
-      </navigator>
-      <navigator>
-        <image src="../../static/uploads/icon_index_nav_2@2x.png" mode="" />
-        <!-- <text></text> -->
-      </navigator>
-      <navigator>
-        <image src="../../static/uploads/icon_index_nav_1@2x.png" mode="" />
-        <!-- <text></text> -->
+      <navigator v-for="(item,index) in navsList" :key="index">
+        <image :src="item.image_src" />
       </navigator>
     </view>
-
     <!-- 时尚女装 -->
     <view class="box">
-      <view class="floor">
+      <view class="floor" v-for="item in floorsList" :key="item.name">
         <!-- 标题 -->
         <view class="floor_title">
-            <image src="../../static/uploads/pic_floor01_title.png" mode="" />
+            <image :src="item.floor_title.image_src" />
         </view>
         <view class="item">
-            <navigator>
-            <image src="../../static/uploads/pic_floor01_1@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor01_2@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor01_3@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor01_4@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor01_5@2x.png" alt="">
-            </navigator>
-        </view>
-      </view>
-          <view class="floor">
-        <!-- 标题 -->
-        <view class="floor_title">
-            <image src="../../static/uploads/pic_floor02_title.png" mode="" />
-        </view>
-        <view class="item">
-            <navigator>
-            <image src="../../static/uploads/pic_floor02_1@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor02_2@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor02_3@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor02_4@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor02_5@2x.png" alt="">
-            </navigator>
-        </view>
-      </view>
-          <view class="floor">
-        <!-- 标题 -->
-        <view class="floor_title">
-            <image src="../../static/uploads/pic_floor03_title.png" mode="" />
-        </view>
-        <view class="item">
-            <navigator>
-            <image src="../../static/uploads/pic_floor03_1@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor03_2@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor03_3@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor03_4@2x.png" alt="">
-            </navigator>
-             <navigator>
-            <image src="../../static/uploads/pic_floor03_5@2x.png" alt="">
+            <navigator  v-for="sub in item.product_list" :key="sub.name">
+            <image :src="sub.image_src" alt="">
             </navigator>
         </view>
       </view>
@@ -112,8 +40,11 @@ import  search from '@/components/search.vue'
 export default {
   data() {
     return {
+      pageHeight:'auto', //默认页面可以正常滚动
       SwiperList:[], //轮播图的数据
-      pageHeight:'auto', //页面的高度
+      navsList:[],//导航栏数据
+      floorsList:[], //楼层的数据
+   
     };
   },
   components:{
@@ -122,6 +53,8 @@ export default {
   
   onLoad() {
     this.getAndShowSwiperList()
+    this.getAndShowNavsList()
+    this.getAndShowFloorsList()
   },
 
   methods: {
@@ -140,6 +73,26 @@ export default {
       console.log('轮播图的数据',res);
       if (res.msg.status===200) {
         this.SwiperList =res.data
+      }
+    },
+    // 获取导航栏的数据
+     async  getAndShowNavsList(){
+       const res = await this.request({
+        url: "/api/public/v1/home/catitems"
+      })
+      console.log('导航栏的数据',res);
+      if (res.msg.status===200) {
+        this.navsList =res.data
+      }
+    },
+      // 获取楼层的数据
+     async  getAndShowFloorsList(){
+       const res = await this.request({
+        url: "/api/public/v1/home/floordata"
+      })
+      console.log('楼层的数据',res);
+      if (res.msg.status===200) {
+        this.floorsList =res.data
       }
     }
   },
