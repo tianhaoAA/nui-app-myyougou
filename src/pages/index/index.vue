@@ -12,19 +12,9 @@
     <!-- 轮播图 -->
     <view class="swiper-box">
       <swiper class="swiper" indicator-dots autoplay>
-        <swiper-item>
-          <navigator url="">
-            <image src="../../static/uploads/banner1.png" mode="" />
-          </navigator>
-        </swiper-item>
-        <swiper-item>
-          <navigator url="">
-            <image src="../../static/uploads/banner2.png" mode="" />
-          </navigator>
-        </swiper-item>
-        <swiper-item>
-          <navigator url="">
-            <image src="../../static/uploads/banner3.png" mode="" />
+        <swiper-item v-for='item in SwiperList' :key='item.goods_id'>
+          <navigator url="item.navigator_url">
+            <image :src="item.image_src"  />
           </navigator>
         </swiper-item>
       </swiper>
@@ -127,11 +117,26 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      SwiperList:[], //轮播图的数据
+    };
   },
-  onLoad() {},
+  onLoad() {
+    this.getAndShowSwiperList()
+  },
 
-  methods: {},
+  methods: {
+    // 获取轮播图的数据
+  async  getAndShowSwiperList(){
+       const res = await this.request({
+        url: "/api/public/v1/home/swiperdata"
+      })
+      console.log('轮播图的数据',res);
+      if (res.msg.status===200) {
+        this.SwiperList =res.data
+      }
+    }
+  },
 };
 </script>
 
