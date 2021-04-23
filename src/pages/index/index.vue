@@ -36,65 +36,69 @@
 </template>
 
 <script>
-import  search from '@/components/search.vue'
+import search from "@/components/search.vue";
 export default {
   data() {
     return {
-      pageHeight:'auto', //默认页面可以正常滚动
-      SwiperList:[], //轮播图的数据
-      navsList:[],//导航栏数据
-      floorsList:[], //楼层的数据
-   
+      pageHeight: "auto", //默认页面可以正常滚动
+      SwiperList: [], //轮播图的数据
+      navsList: [], //导航栏数据
+      floorsList: [], //楼层的数据
     };
   },
-  components:{
-    search
+  components: {
+    search,
   },
-  
+  // 开启下拉刷新事件
+  onPullDownRefresh() {
+   Promise.all([ this.getAndShowSwiperList(),  this.getAndShowNavsList(),this.getAndShowFloorsList()]).then(()=>{
+       uni.stopPullDownRefresh();
+         console.log('请求执行完毕了');
+   })
+  },
   onLoad() {
-    this.getAndShowSwiperList()
-    this.getAndShowNavsList()
-    this.getAndShowFloorsList()
+    this.getAndShowSwiperList();
+    this.getAndShowNavsList();
+    this.getAndShowFloorsList();
   },
 
   methods: {
     // 搜索时 页面禁止滚动
-    indexGetHeight(height){
+    indexGetHeight(height) {
       console.log(height);
-      this.pageHeight =height
-        
+      this.pageHeight = height;
     },
 
     // 获取轮播图的数据
-  async  getAndShowSwiperList(){
-       const res = await this.request({
-        url: "/api/public/v1/home/swiperdata"
-      })
-      console.log('轮播图的数据',res);
-      if (res.msg.status===200) {
-        this.SwiperList =res.data
+    async getAndShowSwiperList() {
+      const res = await this.request({
+        url: "/api/public/v1/home/swiperdata",
+      });
+      console.log("轮播图的数据", res);
+      if (res.msg.status === 200) {
+        this.SwiperList = res.data;
       }
     },
     // 获取导航栏的数据
-     async  getAndShowNavsList(){
-       const res = await this.request({
-        url: "/api/public/v1/home/catitems"
-      })
-      console.log('导航栏的数据',res);
-      if (res.msg.status===200) {
-        this.navsList =res.data
+    async getAndShowNavsList() {
+      const res = await this.request({
+        url: "/api/public/v1/home/catitems",
+      });
+      console.log("导航栏的数据", res);
+      if (res.msg.status === 200) {
+        this.navsList = res.data;
       }
     },
-      // 获取楼层的数据
-     async  getAndShowFloorsList(){
-       const res = await this.request({
-        url: "/api/public/v1/home/floordata"
-      })
-      console.log('楼层的数据',res);
-      if (res.msg.status===200) {
-        this.floorsList =res.data
+    // 获取楼层的数据
+    async getAndShowFloorsList() {
+      const res = await this.request({
+        url: "/api/public/v1/home/floordata",
+      });
+      console.log("楼层的数据", res);
+      if (res.msg.status === 200) {
+        this.floorsList = res.data;
       }
-    }
+    },
   },
 };
 </script>
