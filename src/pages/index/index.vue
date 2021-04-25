@@ -32,6 +32,11 @@
         </view>
       </view>
     </view>
+    <view
+    @click="goTop"
+    v-if="isGoTop"
+    class="goTop icon-top">
+    </view>
   </view>
 </template>
 
@@ -44,6 +49,7 @@ export default {
       SwiperList: [], //轮播图的数据
       navsList: [], //导航栏数据
       floorsList: [], //楼层的数据
+      scrollTop:0 //页面滚动
     };
   },
   components: {
@@ -56,16 +62,33 @@ export default {
          console.log('请求执行完毕了');
    })
   },
+
+  computed:{
+    isGoTop(){
+       return this.scrollTop>10
+    }
+  },
   onLoad() {
+    console.log( this.scrollTop);
     this.getAndShowSwiperList();
     this.getAndShowNavsList();
     this.getAndShowFloorsList();
   },
 
   methods: {
+    // 点击回到顶部
+    goTop(){
+      uni.pageScrollTo({
+        scrollTop: 0
+      });
+    },
+    //监听页面滚动事件
+       onPageScroll(obj){
+           console.log(obj);
+       this.scrollTop =obj.scrollTop
+       },
     // 搜索时 页面禁止滚动
     indexGetHeight(height) {
-      console.log(height);
       this.pageHeight = height;
     },
 
@@ -175,4 +198,22 @@ export default {
     }
   }
 }
+.goTop {
+    position: fixed;
+    bottom: 30rpx;
+    /* #ifdef H5 */
+    bottom: 65px;
+    /* #endif */
+    right: 30rpx;
+  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100rpx;
+    height: 100rpx;
+    font-size: 48rpx;
+    color: #666;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
 </style>
