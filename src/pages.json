@@ -32,7 +32,16 @@
 		{
 			"path": "pages/list/index",
 			"style": {
-				"navigationBarTitleText": "列表页"
+				"navigationBarTitleText": "列表页",
+				"onReachBottomDistance":50
+				
+			}
+		},
+		{
+			"path": "pages/list/goods",
+			"style": {
+				"navigationBarTitleText": "商品详情页面",
+				"onReachBottomDistance":50
 				
 			}
 		}

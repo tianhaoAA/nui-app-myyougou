@@ -6,7 +6,7 @@
     <view class="swiper-box">
       <swiper class="swiper" indicator-dots autoplay>
         <swiper-item v-for='item in SwiperList' :key='item.goods_id'>
-          <navigator url="item.navigator_url">
+          <navigator :url="'/pages/list/goods?id='+item.goods_id">
             <image :src="item.image_src"  />
           </navigator>
         </swiper-item>
@@ -14,7 +14,8 @@
     </view>
     <!-- 四个楼层 -->
     <view class="navs">
-      <navigator v-for="(item,index) in navsList" :key="index">
+      <!-- 跳转到 switchTab  -->
+      <navigator url="/pages/category/index" open-type="switchTab" v-for="(item,index) in navsList" :key="index">
         <image :src="item.image_src" />
       </navigator>
     </view>
